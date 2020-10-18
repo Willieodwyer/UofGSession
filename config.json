@@ -1,0 +1,15 @@
+{
+  "driver": "c:\\chromedriver\\chromedriver.exe",
+  "login_address": "https://sportonline.gla.ac.uk/common/scubaWebLogin.php?scubaAppName=stellar",
+  "home_address": "https://sportonline.gla.ac.uk/stellar/scubaWebHome.php",
+  "logins": [
+    {
+      "email": "someonex@example.com",
+      "password": "password",
+      "sessions": [
+        "foo",
+        "bar"
+      ]
+    }
+  ]
+}
