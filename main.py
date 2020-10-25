@@ -37,6 +37,7 @@ def main():
     driver = config["driver"]
     login_address = config["login_address"]
     home_address = config["home_address"]
+    basket_address = config["basket_address"]
 
     fails = {}
     for login in config["logins"]:
@@ -46,7 +47,8 @@ def main():
                                    email,
                                    password,
                                    login_address,
-                                   home_address)
+                                   home_address,
+                                   basket_address)
 
         if uofg_session.login():
             log.info("Login Success!!!")
@@ -58,14 +60,22 @@ def main():
         sessions = login["sessions"]
         failed_bookings = []
         for sesh in sessions:
-            if uofg_session.book_class(sesh):
-                log.info("Booking Success!!! ({})".format(sesh))
-            else:
+            result = False
+            for x in range(1, 6):  # Try 5 times
+                if not uofg_session.go_home():
+                    log.critical("Unable to go home... skipping.")
+                    break
+                log.info("Booking attempt {}".format(x))
+                if uofg_session.book_class(sesh):
+                    log.info("Booking Success!!! ({})".format(sesh))
+                    result = True
+                    break
+
+            if not result:
                 log.error("Booking Failed!!! ({})".format(sesh))
                 failed_bookings.append(str(sesh))
-            if not uofg_session.go_home():
-                log.critical("Unable to go home... exiting.")
-                exit(-1)
+            uofg_session.print_available = True
+
         if len(failed_bookings):
             fails[email] = failed_bookings
         del uofg_session
