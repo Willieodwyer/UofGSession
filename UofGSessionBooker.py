@@ -132,8 +132,7 @@ class UofGSession:
     def book_class(self, session_name: str) -> bool:
         self.log.info("Attempting booking: " + session_name)
 
-        book = self.driver.find_element_by_id("sc-button-bookclass")
-        _click(book)
+        self.driver.find_element_by_id("sc-button-bookclass").click()
 
         try:
             days = self.driver.find_element_by_id(
@@ -145,7 +144,8 @@ class UofGSession:
             return False
 
         last_day = days[-1]
-        _click(last_day)
+        last_day.click()
+        time.sleep(3)
 
         try:
             class_list = WebDriverWait(self.driver, 10).until(
@@ -182,13 +182,12 @@ class UofGSession:
                 + session_name)
             return False
 
-        var = to_book[0]
-        _click(var)
+        to_book[0].click()
 
         try:
-            _click(self.driver.find_element_by_id("sc-button-classdetail"))
-            _click(self.driver.find_element_by_id("sc-button-classdetail"))
-            _click(self.driver.find_element_by_id("sc-button-confirm"))
+            self.driver.find_element_by_id("sc-button-classdetail").click()
+            self.driver.find_element_by_id("sc-button-classdetail").click()
+            self.driver.find_element_by_id("sc-button-confirm").click()
         except:
             self.log.error("Confirming booking failed")
             self.log.error(traceback.format_exc())
