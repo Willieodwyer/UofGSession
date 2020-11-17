@@ -2,13 +2,16 @@
   "driver": "c:\\chromedriver\\chromedriver.exe",
   "login_address": "https://sportonline.gla.ac.uk/common/scubaWebLogin.php?scubaAppName=stellar",
   "home_address": "https://sportonline.gla.ac.uk/stellar/scubaWebHome.php",
+  "basket_address": "https://sportonline.gla.ac.uk/stellar/scubaBasket.php",
   "logins": [
     {
-      "email": "someonex@example.com",
+      "email": "something@gmail.com",
       "password": "password",
       "sessions": [
-        "foo",
-        "bar"
+        "18.45: PowerPlay Platform Session",
+        "19.45: PowerPlay Gym Session",
+        "15.00: PowerPlay Platform Session",
+        "16.00: PowerPlay Gym Session"
       ]
     }
   ]
