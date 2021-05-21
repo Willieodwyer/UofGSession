@@ -6,6 +6,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.chrome.options import Options
+from selenium.common.exceptions import WebDriverException
 
 
 def _value_to_key(search_dict: dict, value: int) -> str:
@@ -45,7 +47,9 @@ class UofGSession:
                  login_address,
                  home_address,
                  basket_address):
-        self.driver = webdriver.Chrome(driver)
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")
+        self.driver = webdriver.Chrome(driver, options=chrome_options)
         self.email = email
         self.password = password
         self.login_address = login_address
@@ -69,11 +73,14 @@ class UofGSession:
             return False
 
     def go_home(self):
-        self.driver.get(self.home_address)
-        if not self.driver.title == "UofG Sport":
-            self.log.critical("Cannot load page " + self.login_address)
+        try:
+            self.driver.get(self.home_address)
+            if not self.driver.title == "UofG Sport":
+                self.log.critical("Cannot load page " + self.login_address)
+                return False
+            return True
+        except:
             return False
-        return True
 
     def login(self) -> bool:
         self.log.info("Attempting to log into {}".format(self.login_address))
