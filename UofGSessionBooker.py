@@ -96,35 +96,41 @@ class UofGSession:
         email_input.clear()
         email_input.send_keys(self.email)
 
-        pw1 = self.driver.find_element_by_id("sc-input-password1-container-id")
-        pw1_input = pw1.find_element_by_id("sc-input-password1")
-        pw1_label = str(pw1.find_element_by_tag_name("label").get_attribute(
-            'textContent')).split(" ")
-        pw1_index = _number_dict[pw1_label[0]]
+        pw = self.driver.find_element_by_id("sc-input-password-container-id")
+        password_input = pw.find_element_by_id("sc-input-password")
+        password_input.clear()
+        password_input.send_keys(self.password)
 
-        pw2 = self.driver.find_element_by_id("sc-input-password2-container-id")
-        pw2_input = pw2.find_element_by_id("sc-input-password2")
-        pw2_label = str(pw2.find_element_by_tag_name("label").get_attribute(
-            'textContent')).split(" ")
-        pw2_index = _number_dict[pw2_label[0]]
-
-        pw3 = self.driver.find_element_by_id("sc-input-password3-container-id")
-        pw3_input = pw3.find_element_by_id("sc-input-password3")
-        pw3_label = str(pw3.find_element_by_tag_name("label").get_attribute(
-            'textContent')).split(" ")
-        pw3_index = _number_dict[pw3_label[0]]
-
-        self.log.info(
-            "Using letters {}({}), {}({}) and {}({}) from the password".format(
-                pw1_index, _value_to_key(_number_dict, pw1_index),
-                pw2_index, _value_to_key(_number_dict, pw2_index),
-                pw3_index, _value_to_key(_number_dict, pw3_index)))
-
-        pw1_input.send_keys(self.password[pw1_index - 1])
-        pw2_input.send_keys(self.password[pw2_index - 1])
-        pw3_input.send_keys(self.password[pw3_index - 1])
+        # pw1 = self.driver.find_element_by_id("sc-input-password1-container-id")
+        # pw1_input = pw1.find_element_by_id("sc-input-password1")
+        # pw1_label = str(pw1.find_element_by_tag_name("label").get_attribute(
+        #     'textContent')).split(" ")
+        # pw1_index = _number_dict[pw1_label[0]]
+        #
+        # pw2 = self.driver.find_element_by_id("sc-input-password2-container-id")
+        # pw2_input = pw2.find_element_by_id("sc-input-password2")
+        # pw2_label = str(pw2.find_element_by_tag_name("label").get_attribute(
+        #     'textContent')).split(" ")
+        # pw2_index = _number_dict[pw2_label[0]]
+        #
+        # pw3 = self.driver.find_element_by_id("sc-input-password3-container-id")
+        # pw3_input = pw3.find_element_by_id("sc-input-password3")
+        # pw3_label = str(pw3.find_element_by_tag_name("label").get_attribute(
+        #     'textContent')).split(" ")
+        # pw3_index = _number_dict[pw3_label[0]]
+        #
+        # self.log.info(
+        #     "Using letters {}({}), {}({}) and {}({}) from the password".format(
+        #         pw1_index, _value_to_key(_number_dict, pw1_index),
+        #         pw2_index, _value_to_key(_number_dict, pw2_index),
+        #         pw3_index, _value_to_key(_number_dict, pw3_index)))
+        #
+        # pw1_input.send_keys(self.password[pw1_index - 1])
+        # pw2_input.send_keys(self.password[pw2_index - 1])
+        # pw3_input.send_keys(self.password[pw3_index - 1])
 
         _click(self.driver.find_element_by_id("sc-submit-login"))
+
         try:
             self.driver.find_element_by_id("sc-div-bookcaptiontext")
             return True
